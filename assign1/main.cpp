@@ -154,3 +154,8 @@ int main() {
 
   return run_autograder();
 }
+
+/*Note:
+add & to variables that you wish to modify through a function, otherwise it is only a copy
+e.g.:void parse_csv(std::string filename, std::vector<Course>& courses)
+*/
