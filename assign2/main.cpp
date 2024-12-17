@@ -16,7 +16,7 @@
 
 #include "utils.h"
 
-std::string kYourName = "STUDENT TODO"; // Don't forget to change this!
+std::string kYourName = "OSU CARL"; // Don't forget to change this!
 
 /**
  * Takes in a file name and returns a set containing all of the applicant names as a set.
@@ -31,6 +31,18 @@ std::string kYourName = "STUDENT TODO"; // Don't forget to change this!
  */
 std::set<std::string> get_applicants(std::string filename) {
   // STUDENT TODO: Implement this function.
+  std::ifstream ifs(filename);
+  std::set<std::string> applicants;
+
+  if (ifs.is_open()) {
+    std::string line;
+    while (std::getline(ifs, line)) {
+      applicants.insert(line);
+    }
+  }
+  
+  ifs.close();
+  return applicants;
 }
 
 /**
