@@ -13,6 +13,7 @@
 #include <set>
 #include <string>
 #include <unordered_set>
+#include <sstream>
 
 #include "utils.h"
 
@@ -30,7 +31,6 @@ std::string kYourName = "OSU CARL"; // Don't forget to change this!
  * to also change the corresponding functions in `utils.h`.
  */
 std::set<std::string> get_applicants(std::string filename) {
-  // STUDENT TODO: Implement this function.
   std::ifstream ifs(filename);
   std::set<std::string> applicants;
 
@@ -44,6 +44,18 @@ std::set<std::string> get_applicants(std::string filename) {
   ifs.close();
   return applicants;
 }
+bool compare_initials_helper(const std::string name1, const std::string name2) {
+  std::pair<std::string, std::string> p1;
+  std::stringstream ss1(name1);
+  ss1 >> p1.first; ss1 >> p1.second;
+
+  std::pair<std::string, std::string> p2;
+  std::stringstream ss2(name2);
+  ss2 >> p2.first; ss2 >> p2.second;
+
+  return p1.first.at(0) == p2.first.at(0)
+        && p1.second.at(0) == p2.second.at(0);
+}
 
 /**
  * Takes in a set of student names by reference and returns a queue of names
@@ -54,8 +66,17 @@ std::set<std::string> get_applicants(std::string filename) {
  * @return          A queue containing pointers to each matching name.
  */
 std::queue<const std::string*> find_matches(std::string name, std::set<std::string>& students) {
-  // STUDENT TODO: Implement this function.
+  std::queue<const std::string*> matches;
+  for (const auto& candidate : students) {
+    if (compare_initials_helper(name, candidate)) {
+      matches.push(&candidate);
+    }
+  }
+
+  return matches;
 }
+
+
 
 /**
  * Takes in a queue of pointers to possible matches and determines the one true match!
@@ -69,6 +90,12 @@ std::queue<const std::string*> find_matches(std::string name, std::set<std::stri
  */
 std::string get_match(std::queue<const std::string*>& matches) {
   // STUDENT TODO: Implement this function.
+  std::string result{""};
+  if (matches.empty()) {
+    return {"NO STUDENT FOUND."};
+  } else {
+    return *matches.back();
+  }
 }
 
 /* #### Please don't modify this call to the autograder! #### */

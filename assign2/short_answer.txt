@@ -4,8 +4,17 @@ placeholders remaining in the file (and remove this comment too).
 Marriage Pact
 -------------
 
-Q1. It is your choice to use either an ordered or unordered set. In a few sentences, what are some of the tradeoffs between the two? Additionally, please give an example (that has not been shown in lecture) of a valid hash function that could be used to hash student names for an unordered set.
-A1. TODO
+Q1. It is your choice to use either an ordered or unordered set. In a few sentences, 
+what are some of the tradeoffs between the two? Additionally, 
+please give an example (that has not been shown in lecture) 
+of a valid hash function that could be used to hash student names for an unordered set.
+A1. 
+Usage limits: ordered set requires key implements operator<, while unordered_set requires key implements hash function.
+Speed: generally unordered_set is faster than set because of its array-like implementation. We could find the address of the given key by its hash funciton within O(1) time complexity.
+Valid hash function: f(name) = sigma(ascii of every char in the name) modulus 1000
 
 Q2. Note that we are saving pointers to names in the queue, not names themselves. Why might this be desired in this problem? What happens if the original set where the names are stored goes out of scope and the pointers are referenced?
-A2. TODO
+A2. 
+Save pointers rather than names is more space saving because a std::string pointer uses less memory space to store an actual std::string.
+Also avoid unnecessary copies of names by using pointers.
+The function breaks if the input is not a name while we do not implement valid check for inputs.
