@@ -5,7 +5,23 @@ Make a Class
 ------------
 
 Q1. What’s const-correctness and why is it important?
-A1. TODO
+A1. 
+Const-correctness refers to the practice of ensuring that variables, 
+objects, function parameters, and member functions in C++ are declared 
+as const wherever possible to clearly express the immutability 
+(unchangeability) of the data they handle. 
+This concept helps prevent unintended modifications and makes the code safer, 
+easier to understand, and more maintainable.
+
+Prevents Unintended Changes: Declaring variables or parameters as const ensures they cannot be modified accidentally. This reduces bugs caused by unintended side effects.
+
+Self-Documenting Code: Using const makes your intentions explicit. Other developers (or your future self) can quickly understand which parts of the code are meant to remain unaltered.
+
+Enables Compiler Optimizations: The compiler can make optimizations knowing that certain values won't change, potentially improving performance.
+
+Improves Code Reusability: By marking parameters as const, you allow functions to work with both const and non-const objects. For example, a function that accepts a const std::string& can handle both std::string and const std::string.
+
+Encourages Best Practices: Writing const-correct code forces you to think carefully about which data is mutable, improving the overall design of your code.
 
 Q2. Is your class const-correct? How do you know?
 A2. TODO
