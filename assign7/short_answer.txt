@@ -5,13 +5,22 @@ Unique Pointer
 --------------
 
 Q1. List one or two benefits of using RAII to manage memory instead manually calling `new` and `delete`.
-A1. TODO
+A1. 
+Automatic Resource Management: RAII ensures that resources are automatically released when they go out of scope, reducing the risk of memory leaks and dangling pointers. This is because the destructor of the RAII object will automatically release the resource.
+
+Exception Safety: RAII provides strong exception safety guarantees. If an exception is thrown, the destructors of all objects that have gone out of scope will be called, ensuring that resources are properly cleaned up even in the presence of exceptions.
 
 Q2. When implementing move semantics for a `unique_ptr`, for example in the move constructor `unique_ptr(unique_ptr&& other)`, it is essential that we set the underlying pointer of the `other` parameter to `nullptr` before exiting the function. Explain in your own words what problem would arise if we did not.
-A2. TODO
+A2. 
+If we do not set the underlying pointer of the `other` parameter to `nullptr` in the move constructor, both the moved-from and the moved-to `unique_ptr` instances would hold the same raw pointer. This would lead to a double deletion when both `unique_ptr` instances go out of scope, causing undefined behavior and potentially crashing the program. Setting the `other`'s pointer to `nullptr` ensures that the moved-from `unique_ptr` no longer owns the resource, preventing this issue.
 
 Q3. This method of recursive deallocation through RAII works great for small lists, but may pose a problem for longer lists. Why? Hint: what is the limit for how "deep" a recursive function's call stack can grow?
-A3. TODO
+A3. 
+The method of recursive deallocation through RAII (Resource Acquisition Is Initialization) works well for small lists, but it can pose a problem for longer lists due to the limit on the call stack depth. Each recursive call consumes stack space, and if the list is very long, the recursion can lead to a stack overflow error. This is because the call stack has a limited size, and deep recursion can exceed this limit, causing the program to crash.
 
 Q4. What does `std::move` do in this context? Why is it safe to use `std::move` and move semantics here?
-A4. TODO
+A4. 
+In this context, std::move is used to transfer ownership of the unique_ptr from one variable to another. Specifically, it is used to transfer ownership of the unique_ptr from head to node->next and then from node to head.
+Ownership Transfer: unique_ptr ensures that only one unique_ptr owns a particular resource at any time. Using std::move transfers ownership from one unique_ptr to another, ensuring that there are no multiple owners of the same resource.
+Nullifying the Source: After the move, the source unique_ptr is set to nullptr, which means it no longer owns the resource. This prevents any potential double-deletion issues.
+Efficient Resource Management: Moving a unique_ptr is efficient because it only involves transferring the pointer, not the actual resource it manages.
